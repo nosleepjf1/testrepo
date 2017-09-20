@@ -1,0 +1,21 @@
+html, body {
+    font-size: 40px;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    background: blanchedalmond;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+}
+
+.block {
+    flex: 1;
+}
+
+span {
+    padding: 0 10px;
+    border: solid black 1px;
+}
