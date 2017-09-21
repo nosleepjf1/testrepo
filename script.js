@@ -285,5 +285,10 @@ function submit(){
     });
     var percentage = correctChoices / arrayOfXs.length * 100;
 document.getElementById('rating').innerHTML = "Your rating is " + percentage.toFixed(0) + " percent";
-
+if(document.getElementById('submit').innerHTML == "Play again?"){
+    location.reload();
 }
+
+document.getElementById('submit').innerHTML = "Play again?";
+}
+
