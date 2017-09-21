@@ -99,7 +99,6 @@ var block9num9 = ["block7num7","block7num8","block7num9","block8num7","block8num
 
 var arrayOfXs = [];
 function FillRestOfBoard(data, name, lastRow){
-    //var usedNumbers = [Number(document.getElementById('block1num1').innerHTML),Number(document.getElementById('block1num2').innerHTML),Number(document.getElementById('block1num3').innerHTML)]
 var usedNumbers = [];
     for(var a = 0; a < data.length; a++){
         usedNumbers.push(Number(document.getElementById(data[a]).innerHTML));
@@ -228,6 +227,63 @@ function shuffleArray(array) {
     return array;
 }
 
+var numOfChecks = 0;
 function clicked (id){
-    console.log(id);
+    if(document.getElementById(id).innerHTML == "x" || document.getElementById(id).innerHTML == "✔") {
+        if (document.getElementById(id).innerHTML !== "x") {
+            document.getElementById(id).innerHTML = "x";
+            numOfChecks--;
+        }
+        else if(arrayOfXs.length > numOfChecks) {
+            document.getElementById(id).innerHTML = "&#10004";
+            numOfChecks++;
+        }
+    }
+//document.getElementById("numOfChecks").innerHTML = numOfChecks.toString();
+    if(numOfChecks == arrayOfXs.length){
+        document.getElementById("submit").style.display = "block";
+    }
+    else {
+        document.getElementById("submit").style.display = "none";
+    }
+}
+var decoys = [];
+function CreateDecoys(){
+    //add pointer style to arrayOfXs
+    arrayOfXs.forEach(function(item, index){
+        document.getElementById(item).style.cursor = 'pointer';
+    });
+
+    //Display Instructions
+    document.getElementById('instructions').innerHTML = "There are " + arrayOfXs.length + " X's that don't fit the sudoku pattern and 5 x's which do fit the pattern. Try to check the x's which don't fit the pattern without" +
+        " choosing any of the 5 decoys.";
+
+    var spans = document.getElementsByTagName('span');
+    for(var i = 0; i < 5; i++){
+        var j = Math.floor(Math.random() * 81 + 1);
+        if(decoys.indexOf(j) === -1) {
+            decoys.push(spans[j]);
+            spans[j].innerHTML = "x";
+            spans[j].style.cursor = "pointer";
+        }
+    }
+    console.log(decoys);
+    //console.log(spans);
+}
+CreateDecoys();
+
+function submit(){
+    var correctChoices = 0;
+    decoys.forEach(function(item, index){
+        item.style.background = 'red';
+    });
+    arrayOfXs.forEach(function(item, index){
+        document.getElementById(item).style.background = 'green';
+        if(document.getElementById(item).innerHTML == "✔"){
+            correctChoices++;
+        }
+    });
+    var percentage = correctChoices / arrayOfXs.length * 100;
+document.getElementById('rating').innerHTML = "Your rating is " + percentage.toFixed(0) + " percent";
+
 }
